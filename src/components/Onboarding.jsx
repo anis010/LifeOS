@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import AinAvatar from './AinAvatar.jsx';
 
@@ -9,22 +9,38 @@ const bubbleVariants = {
 };
 
 const Onboarding = ({ questions, onComplete, initialAnswers = {} }) => {
+  const sanitizedInitialAnswers = useMemo(() => {
+    if (initialAnswers && typeof initialAnswers === 'object') {
+      return initialAnswers;
+    }
+    return {};
+  }, [initialAnswers]);
+
   const starter = useMemo(() => {
     return questions.reduce((acc, question) => {
+      const storedValue = sanitizedInitialAnswers[question.id];
+
       if (question.type === 'multi-select') {
-        acc[question.id] = initialAnswers[question.id] ?? [];
+        acc[question.id] = Array.isArray(storedValue) ? storedValue : [];
       } else if (question.type === 'range') {
-        acc[question.id] = initialAnswers[question.id] ?? question.default ?? Math.round((question.min + question.max) / 2);
+        acc[question.id] =
+          typeof storedValue === 'number'
+            ? storedValue
+            : question.default ?? Math.round((question.min + question.max) / 2);
       } else if (question.type === 'choice') {
-        acc[question.id] = initialAnswers[question.id] ?? '';
+        acc[question.id] = typeof storedValue === 'string' ? storedValue : '';
       } else {
-        acc[question.id] = initialAnswers[question.id] ?? '';
+        acc[question.id] = typeof storedValue === 'string' ? storedValue : '';
       }
       return acc;
     }, {});
-  }, [initialAnswers, questions]);
+  }, [questions, sanitizedInitialAnswers]);
 
   const [answers, setAnswers] = useState(starter);
+
+  useEffect(() => {
+    setAnswers(starter);
+  }, [starter]);
   const [index, setIndex] = useState(0);
   const current = questions[index];
 
