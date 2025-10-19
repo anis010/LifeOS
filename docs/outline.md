@@ -2,24 +2,29 @@
 
 ## File Structure
 ```
-/mnt/okcomputer/output/
-├── index.html          # Main landing page with dashboard preview
-├── features.html       # Detailed feature exploration
-├── vision.html         # Product vision and roadmap
-├── join.html           # Waitlist signup and community
-├── main.js             # Core JavaScript functionality
-├── resources/          # Images and assets folder
-│   ├── hero-bg.jpg     # Generated hero background
-│   ├── dashboard-ui.png # Dashboard interface mockup
-│   ├── ain-owl.png     # AI companion mascot
-│   ├── finance-icon.png # Module icons
-│   ├── health-icon.png # Module icons
-│   ├── spirit-icon.png # Module icons
-│   ├── habits-icon.png # Module icons
-│   └── career-icon.png # Module icons
-├── interaction.md      # Interaction design document
-├── design.md          # Design style guide
-└── outline.md         # This project outline
+LifeOS/
+├── README.md              # Project introduction and setup notes
+├── docs/                  # Planning and design references
+│   ├── design.md          # Design style guide
+│   ├── interaction.md     # Interaction design document
+│   └── outline.md         # This project outline
+└── public/                # User-facing application files
+    ├── assets/
+    │   └── images/        # Static imagery used across pages
+    │       ├── ain-owl.png       # AI companion mascot
+    │       ├── career-icon.png   # Module icon
+    │       ├── dashboard-ui.png  # Dashboard interface mockup
+    │       ├── finance-icon.png  # Module icon
+    │       ├── habits-icon.png   # Module icon
+    │       ├── health-icon.png   # Module icon
+    │       ├── hero-bg.jpg       # Generated hero background
+    │       └── spirit-icon.png   # Module icon
+    ├── scripts/
+    │   └── main.js         # Core JavaScript functionality
+    ├── features.html       # Detailed feature exploration
+    ├── index.html          # Main landing page with dashboard preview
+    ├── join.html           # Waitlist signup and community
+    └── vision.html         # Product vision and roadmap
 ```
 
 ## Page Breakdown

@@ -494,7 +494,7 @@ class MySystem {
         notification.className = `ai-notification ${type}`;
         notification.innerHTML = `
             <div class="notification-content">
-                <img src="resources/ain-owl.png" alt="Ain" class="notification-icon">
+                <img src="assets/images/ain-owl.png" alt="Ain" class="notification-icon">
                 <div class="notification-message">${message}</div>
                 <button class="notification-close">&times;</button>
             </div>
