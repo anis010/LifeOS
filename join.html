@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join My System - Be Among the First</title>
+    <meta name="description" content="Join the My System waitlist and be among the first to experience the future of personal optimization. Get early access and exclusive benefits.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --night-blue: #1a1a2e;
+            --deep-blue: #16213e;
+            --warm-ochre: #cc8b3c;
+            --sage-mint: #7fb069;
+            --copper-rose: #c17767;
+            --soft-gray: #f5f5f5;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--night-blue);
+            color: var(--soft-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage-mint);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sage-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--night-blue), var(--deep-blue));
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Signup Section */
+        .signup-section {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .signup-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .signup-form-container {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--warm-ochre);
+        }
+
+        .form-subtitle {
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--warm-ochre);
+            color: white;
+        }
+
+        .step.completed {
+            background: var(--sage-mint);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--sage-mint);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--soft-gray);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--warm-ochre);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--soft-gray);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .form-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            border-color: var(--warm-ochre);
+            background: rgba(204, 139, 60, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: var(--sage-mint);
+            background: rgba(127, 176, 105, 0.1);
+        }
+
+        .option-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--warm-ochre);
+        }
+
+        .option-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--warm-ochre), var(--copper-rose));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--soft-gray);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--sage-mint);
+            color: var(--sage-mint);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 5rem 0;
+            background: var(--night-blue);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--warm-ochre);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .benefit-card h3 {
+            color: var(--sage-mint);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .benefit-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Community Section */
+        .community-section {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+        }
+
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* AI Companion */
+        .ai-companion {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--warm-ochre);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .ai-companion:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(204, 139, 60, 0.4);
+        }
+
+        .ai-companion img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: var(--sage-mint);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .signup-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .form-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">My System</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="join.html">Join</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Join the Flight</h1>
+            <p class="subtitle">Be among the first to experience the future of personal optimization</p>
+        </div>
+    </section>
+
+    <!-- Signup Section -->
+    <section class="signup-section">
+        <div class="container">
+            <div class="signup-container">
+                <div class="signup-form-container fade-in">
+                    <div class="success-message" id="successMessage">
+                        🎉 Welcome to My System! Check your email for confirmation and early access details.
+                    </div>
+                    
+                    <h2 class="form-title">Get Early Access</h2>
+                    <p class="form-subtitle">Join 2,847 others waiting for the future of LifeOS</p>
+                    
+                    <form id="signupForm">
+                        <!-- Step 1: Basic Info -->
+                        <div class="form-step active" id="step1">
+                            <div class="step-indicator">
+                                <div class="step active">1</div>
+                                <div class="step">2</div>
+                                <div class="step">3</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="name">Full Name</label>
+                                <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address</label>
+                                <input type="email" id="email" class="form-input" placeholder="your@email.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="experience">Experience with LifeOS apps</label>
+                                <select id="experience" class="form-select" required>
+                                    <option value="">Select your experience level</option>
+                                    <option value="beginner">Beginner - New to personal optimization</option>
+                                    <option value="intermediate">Intermediate - Use 2-3 apps regularly</option>
+                                    <option value="advanced">Advanced - Power user with multiple systems</option>
+                                    <option value="expert">Expert - Developer or productivity consultant</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-buttons">
+                                <div></div> <!-- Spacer -->
+                                <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next Step</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Life Domains -->
+                        <div class="form-step" id="step2">
+                            <div class="step-indicator">
+                                <div class="step completed">1</div>
+                                <div class="step active">2</div>
+                                <div class="step">3</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Which life domains are most important to you? (Select up to 3)</label>
+                                <div class="form-options">
+                                    <div class="option-card" data-domain="finance">
+                                        <span class="option-icon">💰</span>
+                                        <div class="option-title">Financial Health</div>
+                                        <div class="option-description">Budgeting, investments, financial planning</div>
+                                    </div>
+                                    
+                                    <div class="option-card" data-domain="health">
+                                        <span class="option-icon">💪</span>
+                                        <div class="option-title">Physical Wellness</div>
+                                        <div class="option-description">Fitness, nutrition, sleep tracking</div>
+                                    </div>
+                                    
+                                    <div class="option-card" data-domain="spirituality">
+                                        <span class="option-icon">🧘</span>
+                                        <div class="option-title">Spiritual Growth</div>
+                                        <div class="option-description">Meditation, reflection, mindfulness</div>
+                                    </div>
+                                    
+                                    <div class="option-card" data-domain="habits">
+                                        <span class="option-icon">⚡</span>
+                                        <div class="option-title">Habits & Mindset</div>
+                                        <div class="option-description">Routine building, mood tracking, journaling</div>
+                                    </div>
+                                    
+                                    <div class="option-card" data-domain="career">
+                                        <span class="option-icon">🚀</span>
+                                        <div class="option-title">Career Development</div>
+                                        <div class="option-description">Skills, learning, professional growth</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Back</button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next Step</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Preferences -->
+                        <div class="form-step" id="step3">
+                            <div class="step-indicator">
+                                <div class="step completed">1</div>
+                                <div class="step completed">2</div>
+                                <div class="step active">3</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="goals">Primary goal with My System</label>
+                                <select id="goals" class="form-select" required>
+                                    <option value="">What do you want to achieve?</option>
+                                    <option value="balance">Better life balance</option>
+                                    <option value="productivity">Increased productivity</option>
+                                    <option value="health">Improved health & wellness</option>
+                                    <option value="growth">Personal development</option>
+                                    <option value="organization">Better organization</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="notifications">AI Companion interaction preference</label>
+                                <select id="notifications" class="form-select" required>
+                                    <option value="">How often should Ain interact?</option>
+                                    <option value="minimal">Minimal - Only important insights</option>
+                                    <option value="balanced">Balanced - Daily check-ins and tips</option>
+                                    <option value="active">Active - Frequent guidance and suggestions</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="referral">How did you hear about My System?</label>
+                                <select id="referral" class="form-select">
+                                    <option value="">Select an option</option>
+                                    <option value="social">Social Media</option>
+                                    <option value="friend">Friend Recommendation</option>
+                                    <option value="search">Search Engine</option>
+                                    <option value="article">Article or Blog Post</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Join Waitlist</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Benefits Preview -->
+                <div class="benefits-preview fade-in">
+                    <h3 style="color: var(--sage-mint); margin-bottom: 2rem; font-size: 1.5rem;">Your Personalized Preview</h3>
+                    <div id="personalized-preview">
+                        <div style="background: var(--glass-bg); border-radius: 15px; padding: 2rem; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                            <div style="text-align: center; opacity: 0.6;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🦉</div>
+                                <p>Complete the form to see your personalized My System preview</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Join Early?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">🚀</span>
+                    <h3>Early Access</h3>
+                    <p>Be among the first 5,000 users to experience My System before public launch. Get exclusive beta features and influence product development.</p>
+                </div>
+                
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">💎</span>
+                    <h3>Lifetime Discount</h3>
+                    <p>Founding members receive 50% off My System+ forever. Pay €3.49/month instead of €6.99. No price increases, ever.</p>
+                </div>
+                
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">👥</span>
+                    <h3>Community Access</h3>
+                    <p>Join our private Discord community. Connect with like-minded optimizers, share insights, and get direct access to the founding team.</p>
+                </div>
+                
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">🎯</span>
+                    <h3>Personal Onboarding</h3>
+                    <p>Get a personalized setup session with our team. We'll help you configure My System for your unique life situation and goals.</p>
+                </div>
+                
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">🗳️</span>
+                    <h3>Feature Voting</h3>
+                    <p>Help shape the future of My System. Vote on new features, suggest improvements, and see your ideas come to life.</p>
+                </div>
+                
+                <div class="benefit-card fade-in">
+                    <span class="benefit-icon">🏆</span>
+                    <h3>Ambassador Program</h3>
+                    <p>Refer 5 friends and get My System+ free for life. Become a recognized ambassador in our growing community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Join Our Growing Community</h2>
+            <div class="community-stats">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">2,847</div>
+                    <div class="stat-label">Early Adopters</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">847</div>
+                    <div class="stat-label">Discord Members</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">94%</div>
+                    <div class="stat-label">Excitement Score</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">Q1</div>
+                    <div class="stat-label">2025 Launch</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                    "The future of personal optimization is here. Join us in building something extraordinary."
+                </p>
+                <div style="color: var(--warm-ochre); font-weight: 600;">
+                    — The My System Team
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Companion -->
+    <div class="ai-companion" id="aiCompanion">
+        <img src="resources/ain-owl.png" alt="Ain - Your AI Companion">
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedDomains = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Domain selection
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const domain = this.dataset.domain;
+                    
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedDomains = selectedDomains.filter(d => d !== domain);
+                    } else if (selectedDomains.length < 3) {
+                        this.classList.add('selected');
+                        selectedDomains.push(domain);
+                    }
+                    
+                    updatePreview();
+                });
+            });
+
+            // Form submission
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitForm();
+            });
+
+            // AI Companion
+            const aiCompanion = document.getElementById('aiCompanion');
+            aiCompanion.addEventListener('click', function() {
+                showJoinMessage();
+            });
+
+            // Floating animation for AI companion
+            anime({
+                targets: aiCompanion,
+                translateY: [-10, 10],
+                duration: 3000,
+                easing: 'easeInOutSine',
+                direction: 'alternate',
+                loop: true
+            });
+        });
+
+        function nextStep(step) {
+            // Validate current step
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Show next step
+            currentStep = step;
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update step indicators
+            updateStepIndicators();
+            
+            // Update preview
+            updatePreview();
+        }
+
+        function prevStep(step) {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Show previous step
+            currentStep = step;
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update step indicators
+            updateStepIndicators();
+        }
+
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const experience = document.getElementById('experience').value;
+                    return name && email && experience;
+                case 2:
+                    return selectedDomains.length > 0;
+                case 3:
+                    const goals = document.getElementById('goals').value;
+                    const notifications = document.getElementById('notifications').value;
+                    return goals && notifications;
+                default:
+                    return true;
+            }
+        }
+
+        function updateStepIndicators() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                } else if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('personalized-preview');
+            
+            if (selectedDomains.length === 0) {
+                preview.innerHTML = `
+                    <div style="background: var(--glass-bg); border-radius: 15px; padding: 2rem; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                        <div style="text-align: center; opacity: 0.6;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🦉</div>
+                            <p>Select your focus areas to see your personalized preview</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const domainData = {
+                finance: { icon: '💰', title: 'Financial Dashboard', desc: 'Smart budgeting and investment tracking' },
+                health: { icon: '💪', title: 'Health Tracker', desc: 'Workout planning and wellness monitoring' },
+                spirituality: { icon: '🧘', title: 'Spiritual Practice', desc: 'Meditation and reflection tools' },
+                habits: { icon: '⚡', title: 'Habit Builder', desc: 'Atomic habits and mood tracking' },
+                career: { icon: '🚀', title: 'Career Growth', desc: 'Skill development and networking' }
+            };
+
+            let previewHTML = `
+                <div style="background: var(--glass-bg); border-radius: 15px; padding: 2rem; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                    <h4 style="color: var(--warm-ochre); margin-bottom: 1.5rem; text-align: center;">Your Personalized My System</h4>
+            `;
+
+            selectedDomains.forEach(domain => {
+                const data = domainData[domain];
+                previewHTML += `
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                        <span style="font-size: 2rem; margin-right: 1rem;">${data.icon}</span>
+                        <div>
+                            <div style="font-weight: 600; color: var(--sage-mint);">${data.title}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">${data.desc}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            previewHTML += `
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(127, 176, 105, 0.1); border-radius: 10px; border: 1px solid var(--sage-mint);">
+                        <div style="color: var(--sage-mint); font-weight: 600; margin-bottom: 0.5rem;">AI Companion Ain</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Will focus on your selected areas with personalized insights</div>
+                    </div>
+                </div>
+            `;
+
+            preview.innerHTML = previewHTML;
+        }
+
+        function submitForm() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+
+            // Simulate form submission
+            setTimeout(() => {
+                // Show success message
+                document.getElementById('successMessage').classList.add('show');
+                
+                // Reset form
+                document.getElementById('signupForm').reset();
+                selectedDomains = [];
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Go back to step 1
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep = 1;
+                document.getElementById('step1').classList.add('active');
+                updateStepIndicators();
+                updatePreview();
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
+                
+                // Show welcome message
+                showWelcomeMessage();
+            }, 2000);
+        }
+
+        function showWelcomeMessage() {
+            const messages = [
+                "Welcome to the My System family! 🎉 Your journey to unified life optimization starts here. Ain is excited to guide you.",
+                "You've just joined 2,847 forward-thinking individuals. Together, we're building the future of personal technology! 🚀",
+                "Check your email for your welcome package and early access timeline. Your personalized onboarding session awaits! 📧",
+                "As a founding member, you'll help shape My System's future. Your feedback will directly influence product decisions. 🗳️",
+                "You've secured 50% off My System+ for life! Your lifetime discount will be applied when you activate your account. 💎"
+            ];
+
+            messages.forEach((message, index) => {
+                setTimeout(() => {
+                    showNotification(message);
+                }, index * 2000);
+            });
+        }
+
+        function showJoinMessage() {
+            const messages = [
+                "Ready to optimize your life? You're just a few clicks away from joining the most advanced LifeOS ever created! 🦉",
+                "Every person who joins makes our community stronger. Together, we're building something extraordinary. 🤝",
+                "Early members get exclusive benefits: 50% lifetime discount, personal onboarding, and direct access to our team. 💎",
+                "Your data privacy is our top priority. Everything is encrypted and stored locally. You control everything. 🔒",
+                "Imagine having a wise companion that understands your entire life context. That's what we're building for you. ✨"
+            ];
+
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            showNotification(randomMessage);
+        }
+
+        function showNotification(message) {
+            // Remove existing notification
+            const existing = document.querySelector('.ai-notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'ai-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <img src="resources/ain-owl.png" alt="Ain" class="notification-icon">
+                    <div class="notification-message">${message}</div>
+                    <button class="notification-close">&times;</button>
+                </div>
+            `;
+
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 20px;
+                max-width: 300px;
+                background: rgba(26, 26, 46, 0.95);
+                border: 1px solid rgba(204, 139, 60, 0.3);
+                border-radius: 15px;
+                padding: 15px;
+                backdrop-filter: blur(20px);
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+
+            const content = notification.querySelector('.notification-content');
+            content.style.cssText = `
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+            `;
+
+            const icon = notification.querySelector('.notification-icon');
+            icon.style.cssText = `
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            `;
+
+            const messageEl = notification.querySelector('.notification-message');
+            messageEl.style.cssText = `
+                color: #f5f5f5;
+                font-size: 14px;
+                line-height: 1.4;
+                flex: 1;
+            `;
+
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: #f5f5f5;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin: -5px -5px 0 0;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Close handlers
+            closeBtn.addEventListener('click', () => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 300);
+            });
+
+            // Auto close after 8 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 8000);
+        }
+    </script>
+</body>
+</html>

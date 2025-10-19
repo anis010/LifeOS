@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My System - One Life, One OS, One Wise Companion</title>
+    <meta name="description" content="My System is an AI-driven LifeOS that unifies physical health, mental clarity, spiritual depth, financial peace, and professional growth into one personal cockpit.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    
+    <style>
+        :root {
+            --night-blue: #1a1a2e;
+            --deep-blue: #16213e;
+            --warm-ochre: #cc8b3c;
+            --sage-mint: #7fb069;
+            --copper-rose: #c17767;
+            --soft-gray: #f5f5f5;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--night-blue);
+            color: var(--soft-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage-mint);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sage-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: url('resources/hero-bg.jpg') center/cover;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.6));
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--warm-ochre), var(--copper-rose));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(204, 139, 60, 0.4);
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--warm-ochre);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-preview {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--sage-mint);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .metric-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .positive { color: var(--sage-mint); }
+        .negative { color: var(--copper-rose); }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 0;
+            background: var(--night-blue);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--warm-ochre);
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* AI Companion */
+        .ai-companion {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--warm-ochre);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .ai-companion:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(204, 139, 60, 0.4);
+        }
+
+        .ai-companion img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                background-attachment: scroll;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chart containers */
+        .chart-container {
+            height: 200px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">My System</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Explore</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="#" onclick="showWelcomeMessage()">Welcome</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="splitting" data-splitting>Welcome to My System</h1>
+            <p class="subtitle">Your AI-driven LifeOS for unified personal optimization</p>
+            <p class="description">Explore every module freely - no signup required. Click around and experience the future of personal technology.</p>
+            <button class="cta-button" onclick="startExploring()">Start Exploring</button>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="dashboard-container">
+            <h2 class="section-title fade-in">Your Life Dashboard</h2>
+            
+            <div class="dashboard-preview fade-in">
+                <div id="main-dashboard" class="chart-container"></div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="metric-card fade-in" data-domain="finance">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: var(--warm-ochre);">💰</div>
+                        <div class="metric-title">Financial Health</div>
+                    </div>
+                    <div class="metric-value">87%</div>
+                    <div class="metric-change positive">↗ +5% this month</div>
+                    <div id="finance-chart" class="chart-container"></div>
+                </div>
+
+                <div class="metric-card fade-in" data-domain="health">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: var(--sage-mint);">💪</div>
+                        <div class="metric-title">Physical Wellness</div>
+                    </div>
+                    <div class="metric-value">92%</div>
+                    <div class="metric-change positive">↗ +3% this week</div>
+                    <div id="health-chart" class="chart-container"></div>
+                </div>
+
+                <div class="metric-card fade-in" data-domain="spirituality">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: var(--copper-rose);">🧘</div>
+                        <div class="metric-title">Spiritual Growth</div>
+                    </div>
+                    <div class="metric-value">78%</div>
+                    <div class="metric-change positive">↗ +2% this week</div>
+                    <div id="spirit-chart" class="chart-container"></div>
+                </div>
+
+                <div class="metric-card fade-in" data-domain="habits">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: var(--warm-ochre);">⚡</div>
+                        <div class="metric-title">Habit Strength</div>
+                    </div>
+                    <div class="metric-value">85%</div>
+                    <div class="metric-change positive">↗ +7% this month</div>
+                    <div id="habits-chart" class="chart-container"></div>
+                </div>
+
+                <div class="metric-card fade-in" data-domain="career">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: var(--sage-mint);">🚀</div>
+                        <div class="metric-title">Career Progress</div>
+                    </div>
+                    <div class="metric-value">89%</div>
+                    <div class="metric-change positive">↗ +4% this month</div>
+                    <div id="career-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--warm-ochre), var(--copper-rose));">💎</div>
+                <h3>Unified Data Graph</h3>
+                <p>Every data point gets a timestamp, context tag, and belongs to one of five life domains. Your complete life story in one intelligent graph.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--sage-mint), var(--warm-ochre));">🔒</div>
+                <h3>Local-First Privacy</h3>
+                <p>SQLite/Drift on your device with encrypted sync. You own your data, you control your privacy. No compromises.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--copper-rose), var(--sage-mint));">🧠</div>
+                <h3>Explainable AI</h3>
+                <p>Every Cortex advice contains "Why" and "Source". No black box decisions - understand every recommendation.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));">⚡</div>
+                <h3>Micro-Habits</h3>
+                <p>No feature without 30-second access. Quick actions that compound into life-changing results.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background: linear-gradient(135deg, var(--sage-mint), var(--copper-rose));">🦉</div>
+                <h3>Ain's Law</h3>
+                <p>Your AI companion only speaks when it adds real value. Maximum 5 messages per day - quality over quantity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Companion -->
+    <div class="ai-companion" id="aiCompanion">
+        <img src="resources/ain-owl.png" alt="Ain - Your AI Companion">
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

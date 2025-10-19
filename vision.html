@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision - My System LifeOS</title>
+    <meta name="description" content="The vision behind My System: one life, one OS, unified through AI wisdom. Privacy-first, local-first, human-first.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --night-blue: #1a1a2e;
+            --deep-blue: #16213e;
+            --warm-ochre: #cc8b3c;
+            --sage-mint: #7fb069;
+            --copper-rose: #c17767;
+            --soft-gray: #f5f5f5;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--night-blue);
+            color: var(--soft-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage-mint);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sage-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--night-blue), var(--deep-blue));
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Vision Sections */
+        .vision-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .vision-section:nth-child(even) {
+            background: var(--deep-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--warm-ochre);
+        }
+
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .vision-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--warm-ochre), var(--sage-mint));
+        }
+
+        .vision-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .vision-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--sage-mint);
+        }
+
+        .vision-card p {
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        /* Philosophy Section */
+        .philosophy-section {
+            background: var(--deep-blue);
+            padding: 5rem 0;
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .philosophy-quote {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--warm-ochre);
+            line-height: 1.4;
+        }
+
+        .philosophy-author {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 0;
+            background: var(--night-blue);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--warm-ochre), var(--sage-mint));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 10%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 10%;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--warm-ochre);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .timeline-content h3 {
+            color: var(--sage-mint);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .value-card h3 {
+            color: var(--warm-ochre);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .value-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            padding: 5rem 0;
+            background: var(--night-blue);
+        }
+
+        .architecture-diagram {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .architecture-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--sage-mint);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .tech-item h4 {
+            color: var(--warm-ochre);
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* AI Companion */
+        .ai-companion {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--warm-ochre);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .ai-companion:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(204, 139, 60, 0.4);
+        }
+
+        .ai-companion img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+            }
+            
+            .timeline-content {
+                width: 100% !important;
+                margin: 0 0 0 40px !important;
+            }
+            
+            .timeline-date {
+                left: 20px !important;
+                transform: translateY(-50%);
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">My System</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Explore</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="#" onclick="showVisionWelcome()">Welcome</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Our Vision</h1>
+            <p class="subtitle">One life, unified through technology, guided by wisdom</p>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section">
+        <div class="container">
+            <div class="philosophy-content fade-in">
+                <div class="philosophy-quote">
+                    "Technology should amplify human wisdom, not replace it. My System exists to make you the hero of your own life story."
+                </div>
+                <div class="philosophy-author">— The Founders of My System</div>
+                <p style="font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                    In a world of fragmented apps and scattered data, we believe in the power of unity. 
+                    Your life is interconnected—your tools should be too. My System is not just another app; 
+                    it's your digital companion in the journey of becoming your best self.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Vision Section -->
+    <section class="vision-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Core Vision</h2>
+            <div class="vision-grid">
+                <div class="vision-card fade-in">
+                    <h3>Unified Life Experience</h3>
+                    <p>Break down the silos between different life domains. Your physical health affects your mental clarity, which impacts your career performance, which influences your financial decisions. My System sees the connections and helps you optimize holistically.</p>
+                </div>
+                
+                <div class="vision-card fade-in">
+                    <h3>Privacy-First Philosophy</h3>
+                    <p>Your life data is yours alone. We use local-first architecture with encrypted sync, ensuring you maintain complete control. No data mining, no advertising, no compromises. Your trust is our most valuable asset.</p>
+                </div>
+                
+                <div class="vision-card fade-in">
+                    <h3>AI as Wisdom Amplifier</h3>
+                    <p>Artificial Intelligence should enhance human decision-making, not replace it. Ain, your AI companion, provides insights and suggestions while always respecting your autonomy. Every recommendation comes with explanations and sources.</p>
+                </div>
+                
+                <div class="vision-card fade-in">
+                    <h3>Micro-Habit Revolution</h3>
+                    <p>Big changes come from small, consistent actions. We focus on 30-second interactions that compound into life-changing results. No feature ships without passing the "quick access" test.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card fade-in">
+                    <span class="value-icon">🔒</span>
+                    <h3>Privacy by Design</h3>
+                    <p>Your data stays on your device. Encrypted sync is optional and user-controlled. We can't see your data even if we wanted to.</p>
+                </div>
+                
+                <div class="value-card fade-in">
+                    <span class="value-icon">🎯</span>
+                    <h3>Human-Centered</h3>
+                    <p>Technology serves humans, not the other way around. Every design decision prioritizes your wellbeing and autonomy.</p>
+                </div>
+                
+                <div class="value-card fade-in">
+                    <span class="value-icon">🌱</span>
+                    <h3>Sustainable Growth</h3>
+                    <p>We believe in steady, sustainable progress over quick fixes. Your journey is unique, and we respect your pace.</p>
+                </div>
+                
+                <div class="value-card fade-in">
+                    <span class="value-icon">🤝</span>
+                    <h3>Transparent AI</h3>
+                    <p>No black boxes. Every AI recommendation includes reasoning and sources. You always have the final say.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section class="architecture-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Technical Architecture</h2>
+            <div class="architecture-diagram fade-in">
+                <div class="architecture-title">Privacy-First, Local-First Architecture</div>
+                <div id="architecture-chart" style="height: 400px; margin: 2rem 0;"></div>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h4>Frontend</h4>
+                        <p>Flutter 3 for iOS, Android, macOS, and Web PWA</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Local Storage</h4>
+                        <p>SQLite/Drift with SQLCipher encryption</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>State Management</h4>
+                        <p>Riverpod with encrypted Isar store</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Backend</h4>
+                        <p>Supabase with Row Level Security</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>AI Processing</h4>
+                        <p>On-device TensorFlow-Lite + OpenAI/Gemini</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Security</h4>
+                        <p>User-owned 256-bit encryption keys</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Timeline -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Development Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Q1 2025 - MVP Launch</h3>
+                        <p>Dashboard foundation with Finance and Habits modules. Basic Cortex AI with static insights. 5,000 beta testers onboarded.</p>
+                    </div>
+                    <div class="timeline-date">Q1 2025</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Q2 2025 - Health & Spirituality</h3>
+                        <p>Complete Health & Fitness module with wearable integration. Prayer/Spirituality module with multi-faith support. Dutch & English NLU for Ain.</p>
+                    </div>
+                    <div class="timeline-date">Q2 2025</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Q3 2025 - Career & Ecosystem</h3>
+                        <p>Career & Development module with mentor matching. White-label API for coaches and therapists. Portfolio builder launch.</p>
+                    </div>
+                    <div class="timeline-date">Q3 2025</div>
+                </div>
+                
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Q4 2025 - Platform Expansion</h3>
+                        <p>Desktop web application with full feature parity. Family sharing capabilities. EU datacenter and ISO 27001 certification.</p>
+                    </div>
+                    <div class="timeline-date">Q4 2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Companion -->
+    <div class="ai-companion" id="aiCompanion">
+        <img src="resources/ain-owl.png" alt="Ain - Your AI Companion">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Initialize architecture chart
+            initArchitectureChart();
+
+            // AI Companion
+            const aiCompanion = document.getElementById('aiCompanion');
+            aiCompanion.addEventListener('click', function() {
+                showVisionMessage();
+            });
+
+            // Floating animation for AI companion
+            anime({
+                targets: aiCompanion,
+                translateY: [-10, 10],
+                duration: 3000,
+                easing: 'easeInOutSine',
+                direction: 'alternate',
+                loop: true
+            });
+        });
+
+        function initArchitectureChart() {
+            const chartDom = document.getElementById('architecture-chart');
+            if (!chartDom) return;
+
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                backgroundColor: 'transparent',
+                title: {
+                    text: 'Data Flow Architecture',
+                    left: 'center',
+                    textStyle: { color: '#7fb069', fontSize: 18 }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    textStyle: { color: '#f5f5f5' }
+                },
+                series: [{
+                    type: 'sankey',
+                    layout: 'none',
+                    emphasis: {
+                        focus: 'adjacency'
+                    },
+                    data: [
+                        { name: 'User Input' },
+                        { name: 'Local Storage' },
+                        { name: 'On-Device AI' },
+                        { name: 'Cloud AI' },
+                        { name: 'Insights' },
+                        { name: 'User Control' }
+                    ],
+                    links: [
+                        { source: 'User Input', target: 'Local Storage', value: 10 },
+                        { source: 'Local Storage', target: 'On-Device AI', value: 8 },
+                        { source: 'Local Storage', target: 'Cloud AI', value: 2 },
+                        { source: 'On-Device AI', target: 'Insights', value: 6 },
+                        { source: 'Cloud AI', target: 'Insights', value: 2 },
+                        { source: 'Insights', target: 'User Control', value: 8 }
+                    ],
+                    itemStyle: {
+                        color: function(params) {
+                            const colors = ['#cc8b3c', '#7fb069', '#c17767'];
+                            return colors[params.dataIndex % colors.length];
+                        }
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        curveness: 0.5
+                    },
+                    label: {
+                        color: '#f5f5f5',
+                        fontSize: 12
+                    }
+                }]
+            };
+
+            myChart.setOption(option);
+        }
+
+        function showVisionMessage() {
+            const messages = [
+                "Our vision is simple: technology should make you more human, not less. Every feature is designed with this principle in mind. 🦉",
+                "We believe in sustainable growth over quick fixes. Your journey is unique, and we're here to support your pace, not push our agenda.",
+                "Privacy isn't just a feature—it's our foundation. Your data is encrypted with keys only you possess. We literally cannot access your information.",
+                "AI should amplify your wisdom, not replace your judgment. Every suggestion includes reasoning so you can make informed decisions.",
+                "We're building a community of conscious optimizers. People who believe in continuous improvement while staying true to their values."
+            ];
+
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            showNotification(randomMessage);
+        }
+
+        function showVisionWelcome() {
+            const welcomeMessages = [
+                "Welcome to our Vision page! 🎉 This is where we share our philosophy of human-centered technology.",
+                "Discover why we built My System and our commitment to privacy, transparency, and user empowerment. ✨",
+                "Our roadmap shows how we're building the future of personal technology - one that respects your autonomy. 🚀"
+            ];
+
+            const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+            showNotification(randomMessage);
+        }
+
+        function showNotification(message) {
+            // Remove existing notification
+            const existing = document.querySelector('.ai-notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'ai-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <img src="resources/ain-owl.png" alt="Ain" class="notification-icon">
+                    <div class="notification-message">${message}</div>
+                    <button class="notification-close">&times;</button>
+                </div>
+            `;
+
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 20px;
+                max-width: 300px;
+                background: rgba(26, 26, 46, 0.95);
+                border: 1px solid rgba(204, 139, 60, 0.3);
+                border-radius: 15px;
+                padding: 15px;
+                backdrop-filter: blur(20px);
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+
+            const content = notification.querySelector('.notification-content');
+            content.style.cssText = `
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+            `;
+
+            const icon = notification.querySelector('.notification-icon');
+            icon.style.cssText = `
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            `;
+
+            const messageEl = notification.querySelector('.notification-message');
+            messageEl.style.cssText = `
+                color: #f5f5f5;
+                font-size: 14px;
+                line-height: 1.4;
+                flex: 1;
+            `;
+
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: #f5f5f5;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin: -5px -5px 0 0;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Close handlers
+            closeBtn.addEventListener('click', () => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 300);
+            });
+
+            // Auto close after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

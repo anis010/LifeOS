@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - My System LifeOS</title>
+    <meta name="description" content="Explore the five core modules of My System: Finance, Health & Fitness, Spirituality, Habits & Mindset, and Career Development.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --night-blue: #1a1a2e;
+            --deep-blue: #16213e;
+            --warm-ochre: #cc8b3c;
+            --sage-mint: #7fb069;
+            --copper-rose: #c17767;
+            --soft-gray: #f5f5f5;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--night-blue);
+            color: var(--soft-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--sage-mint);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sage-mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--night-blue), var(--deep-blue));
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Module Explorer */
+        .module-explorer {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .module-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .module-tab {
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        .module-tab.active {
+            background: var(--warm-ochre);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+        }
+
+        .module-tab:hover:not(.active) {
+            transform: translateY(-2px);
+            border-color: var(--sage-mint);
+        }
+
+        .module-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .module-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--warm-ochre);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage-mint);
+            font-weight: bold;
+        }
+
+        .demo-section {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--sage-mint);
+            text-align: center;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 1rem 0;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .demo-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .demo-item h4 {
+            color: var(--warm-ochre);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .demo-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* AI Companion */
+        .ai-companion {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--warm-ochre);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(204, 139, 60, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .ai-companion:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(204, 139, 60, 0.4);
+        }
+
+        .ai-companion img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .module-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">My System</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Explore</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="#" onclick="showFeatureWelcome()">Welcome</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Explore Every Module</h1>
+            <p class="subtitle">Discover how each LifeOS module works together - no signup required, just click and explore!</p>
+        </div>
+    </section>
+
+    <!-- Module Explorer -->
+    <section class="module-explorer">
+        <div class="container">
+            <div class="module-tabs">
+                <div class="module-tab active" data-module="finance">
+                    <img src="resources/finance-icon.png" alt="Finance" style="width: 20px; height: 20px; margin-right: 8px;">
+                    Finance
+                </div>
+                <div class="module-tab" data-module="health">
+                    <img src="resources/health-icon.png" alt="Health" style="width: 20px; height: 20px; margin-right: 8px;">
+                    Health & Fitness
+                </div>
+                <div class="module-tab" data-module="spirituality">
+                    <img src="resources/spirit-icon.png" alt="Spirituality" style="width: 20px; height: 20px; margin-right: 8px;">
+                    Spirituality
+                </div>
+                <div class="module-tab" data-module="habits">
+                    <img src="resources/habits-icon.png" alt="Habits" style="width: 20px; height: 20px; margin-right: 8px;">
+                    Habits & Mindset
+                </div>
+                <div class="module-tab" data-module="career">
+                    <img src="resources/career-icon.png" alt="Career" style="width: 20px; height: 20px; margin-right: 8px;">
+                    Career & Development
+                </div>
+            </div>
+
+            <!-- Finance Module -->
+            <div class="module-content active" id="finance-module">
+                <div class="module-grid">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon" style="background: linear-gradient(135deg, var(--warm-ochre), var(--copper-rose));">💰</div>
+                            <div class="module-title">Financial Intelligence</div>
+                        </div>
+                        <p>Complete financial management with AI-powered insights and predictive analytics.</p>
+                        <ul class="feature-list">
+                            <li>Bank sync with PSD2/EU and Plaid/US support</li>
+                            <li>Automatic categorization with machine learning</li>
+                            <li>Envelope budgeting (weekly, monthly, yearly)</li>
+                            <li>Monte Carlo simulation for financial goals</li>
+                            <li>AI advisor "FinAin" with surplus alerts</li>
+                            <li>Privacy mode with blurred amounts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Financial Dashboard Preview</div>
+                    <div id="finance-demo-chart" class="chart-container"></div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <h4>Smart Budgeting</h4>
+                            <p>Envelope system with AI optimization</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Goal Tracking</h4>
+                            <p>Monte Carlo powered predictions</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Spending Insights</h4>
+                            <p>Pattern recognition and alerts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Module -->
+            <div class="module-content" id="health-module">
+                <div class="module-grid">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon" style="background: linear-gradient(135deg, var(--sage-mint), var(--warm-ochre));">💪</div>
+                            <div class="module-title">Health & Fitness</div>
+                        </div>
+                        <p>Comprehensive health tracking with workout planning and recovery optimization.</p>
+                        <ul class="feature-list">
+                            <li>Workout builder with custom schemas</li>
+                            <li>HRV & sleep tracking (Oura, Garmin, Apple)</li>
+                            <li>AI load coach with strain vs recovery</li>
+                            <li>Nutrition tracking with barcode scanning</li>
+                            <li>Glucose API integration (Libre)</li>
+                            <li>PR streaks with deload weeks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Health Metrics Dashboard</div>
+                    <div id="health-demo-chart" class="chart-container"></div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <h4>Workout Planning</h4>
+                            <p>Custom schemas with progression tracking</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Recovery Monitoring</h4>
+                            <p>HRV-based load management</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Nutrition AI</h4>
+                            <p>Smart meal suggestions and tracking</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spirituality Module -->
+            <div class="module-content" id="spirituality-module">
+                <div class="module-grid">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon" style="background: linear-gradient(135deg, var(--copper-rose), var(--sage-mint));">🧘</div>
+                            <div class="module-title">Spiritual Growth</div>
+                        </div>
+                        <p>Mindful practice tracking with community features and reflection tools.</p>
+                        <ul class="feature-list">
+                            <li>Adhan/church bell notifications (geo-based)</li>
+                            <li>Qibla/rosary tracker with streaks</li>
+                            <li>Grace days for holidays and rest</li>
+                            <li>Voice-to-text reflection diary</li>
+                            <li>Sentiment analysis of reflections</li>
+                            <li>Anonymous group streaks (opt-in)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Spiritual Practice Tracker</div>
+                    <div id="spirit-demo-chart" class="chart-container"></div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <h4>Practice Streaks</h4>
+                            <p>Flexible tracking with grace periods</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Reflection Journal</h4>
+                            <p>Voice-to-text with sentiment analysis</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Community</h4>
+                            <p>Anonymous group motivation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Habits Module -->
+            <div class="module-content" id="habits-module">
+                <div class="module-grid">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon" style="background: linear-gradient(135deg, var(--warm-ochre), var(--sage-mint));">⚡</div>
+                            <div class="module-title">Habits & Mindset</div>
+                        </div>
+                        <p>Atomic habit formation with cognitive reframing and mood tracking.</p>
+                        <ul class="feature-list">
+                            <li>Atomic habit wizard (cue-routine-reward)</li>
+                            <li>2-axis mood map (energy vs pleasantness)</li>
+                            <li>Evening "3 wins" journal with AI summaries</li>
+                            <li>Cognitive reframing with GPT suggestions</li>
+                            <li>Keystone score with statistical correlation</li>
+                            <li>30-second quick access for all features</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Habit Formation Analytics</div>
+                    <div id="habits-demo-chart" class="chart-container"></div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <h4>Habit Wizard</h4>
+                            <p>Guided atomic habit formation</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Mood Mapping</h4>
+                            <p>2-axis emotional tracking</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Cognitive Reframing</h4>
+                            <p>AI-powered thought restructuring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Module -->
+            <div class="module-content" id="career-module">
+                <div class="module-grid">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon" style="background: linear-gradient(135deg, var(--sage-mint), var(--copper-rose));">🚀</div>
+                            <div class="module-title">Career & Development</div>
+                        </div>
+                        <p>Professional growth tracking with skill development and networking.</p>
+                        <ul class="feature-list">
+                            <li>Skill matrix with LinkedIn import</li>
+                            <li>Certificate tracker with exam reminders</li>
+                            <li>Learning sprints with OKR framework</li>
+                            <li>AI-curated learning resources</li>
+                            <li>Portfolio builder with GitHub/Behance integration</li>
+                            <li>Mentor matching with video calls</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <div class="demo-title">Career Progress Dashboard</div>
+                    <div id="career-demo-chart" class="chart-container"></div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <h4>Skill Matrix</h4>
+                            <p>Visual competency tracking</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Learning Sprints</h4>
+                            <p>OKR-driven development cycles</p>
+                        </div>
+                        <div class="demo-item">
+                            <h4>Mentor Network</h4>
+                            <p>AI-matched professional guidance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Companion -->
+    <div class="ai-companion" id="aiCompanion">
+        <img src="resources/ain-owl.png" alt="Ain - Your AI Companion">
+    </div>
+
+    <script>
+        // Module tab switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.module-tab');
+            const contents = document.querySelectorAll('.module-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const module = this.dataset.module;
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(module + '-module').classList.add('active');
+                    
+                    // Initialize chart for the selected module
+                    initModuleChart(module);
+                });
+            });
+
+            // Initialize finance chart by default
+            initModuleChart('finance');
+
+            // AI Companion
+            const aiCompanion = document.getElementById('aiCompanion');
+            aiCompanion.addEventListener('click', function() {
+                showFeatureSpecificMessage();
+            });
+
+            // Floating animation for AI companion
+            anime({
+                targets: aiCompanion,
+                translateY: [-10, 10],
+                duration: 3000,
+                easing: 'easeInOutSine',
+                direction: 'alternate',
+                loop: true
+            });
+        });
+
+        function initModuleChart(module) {
+            const chartId = module + '-demo-chart';
+            const chartDom = document.getElementById(chartId);
+            if (!chartDom) return;
+
+            const myChart = echarts.init(chartDom);
+            
+            let option = {};
+            
+            switch(module) {
+                case 'finance':
+                    option = {
+                        backgroundColor: 'transparent',
+                        title: {
+                            text: 'Financial Overview',
+                            left: 'center',
+                            textStyle: { color: '#cc8b3c', fontSize: 16 }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            textStyle: { color: '#f5f5f5' }
+                        },
+                        legend: {
+                            data: ['Income', 'Expenses', 'Savings'],
+                            textStyle: { color: '#f5f5f5' },
+                            top: 30
+                        },
+                        grid: { top: 80, bottom: 40, left: 60, right: 40 },
+                        xAxis: {
+                            type: 'category',
+                            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' },
+                            splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
+                        },
+                        series: [
+                            {
+                                name: 'Income',
+                                type: 'line',
+                                data: [5500, 5800, 5600, 6200, 5900, 6500],
+                                lineStyle: { color: '#7fb069' },
+                                itemStyle: { color: '#7fb069' }
+                            },
+                            {
+                                name: 'Expenses',
+                                type: 'line',
+                                data: [4200, 4500, 4300, 4800, 4600, 4900],
+                                lineStyle: { color: '#c17767' },
+                                itemStyle: { color: '#c17767' }
+                            },
+                            {
+                                name: 'Savings',
+                                type: 'line',
+                                data: [1300, 1300, 1300, 1400, 1300, 1600],
+                                lineStyle: { color: '#cc8b3c' },
+                                itemStyle: { color: '#cc8b3c' }
+                            }
+                        ]
+                    };
+                    break;
+                    
+                case 'health':
+                    option = {
+                        backgroundColor: 'transparent',
+                        title: {
+                            text: 'Health Metrics',
+                            left: 'center',
+                            textStyle: { color: '#7fb069', fontSize: 16 }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            textStyle: { color: '#f5f5f5' }
+                        },
+                        legend: {
+                            data: ['Heart Rate', 'Sleep Score', 'HRV'],
+                            textStyle: { color: '#f5f5f5' },
+                            top: 30
+                        },
+                        grid: { top: 80, bottom: 40, left: 60, right: 40 },
+                        xAxis: {
+                            type: 'category',
+                            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' },
+                            splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
+                        },
+                        series: [
+                            {
+                                name: 'Heart Rate',
+                                type: 'line',
+                                data: [68, 72, 70, 69, 71, 67, 65],
+                                lineStyle: { color: '#c17767' },
+                                itemStyle: { color: '#c17767' },
+                                smooth: true
+                            },
+                            {
+                                name: 'Sleep Score',
+                                type: 'line',
+                                data: [85, 82, 88, 90, 87, 92, 89],
+                                lineStyle: { color: '#cc8b3c' },
+                                itemStyle: { color: '#cc8b3c' },
+                                smooth: true
+                            },
+                            {
+                                name: 'HRV',
+                                type: 'line',
+                                data: [42, 38, 45, 48, 44, 50, 47],
+                                lineStyle: { color: '#7fb069' },
+                                itemStyle: { color: '#7fb069' },
+                                smooth: true
+                            }
+                        ]
+                    };
+                    break;
+                    
+                case 'spirituality':
+                    option = {
+                        backgroundColor: 'transparent',
+                        title: {
+                            text: 'Spiritual Practice',
+                            left: 'center',
+                            textStyle: { color: '#c17767', fontSize: 16 }
+                        },
+                        series: [{
+                            type: 'pie',
+                            radius: ['30%', '70%'],
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: 45, name: 'Meditation', itemStyle: { color: '#c17767' } },
+                                { value: 30, name: 'Prayer', itemStyle: { color: '#cc8b3c' } },
+                                { value: 25, name: 'Reflection', itemStyle: { color: '#7fb069' } }
+                            ],
+                            label: {
+                                color: '#f5f5f5',
+                                fontSize: 12
+                            },
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }]
+                    };
+                    break;
+                    
+                case 'habits':
+                    option = {
+                        backgroundColor: 'transparent',
+                        title: {
+                            text: 'Habit Tracking',
+                            left: 'center',
+                            textStyle: { color: '#cc8b3c', fontSize: 16 }
+                        },
+                        grid: { top: 60, bottom: 40, left: 80, right: 40 },
+                        xAxis: {
+                            type: 'value',
+                            max: 100,
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' },
+                            splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: ['Exercise', 'Meditate', 'Read', 'Journal', 'Sleep Early'],
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.8)' }
+                        },
+                        series: [{
+                            type: 'bar',
+                            data: [85, 90, 75, 88, 82],
+                            itemStyle: {
+                                color: {
+                                    type: 'linear',
+                                    x: 0, y: 0, x2: 1, y2: 0,
+                                    colorStops: [
+                                        { offset: 0, color: '#cc8b3c' },
+                                        { offset: 1, color: '#7fb069' }
+                                    ]
+                                },
+                                borderRadius: [0, 5, 5, 0]
+                            },
+                            barWidth: '60%'
+                        }]
+                    };
+                    break;
+                    
+                case 'career':
+                    option = {
+                        backgroundColor: 'transparent',
+                        title: {
+                            text: 'Career Development',
+                            left: 'center',
+                            textStyle: { color: '#7fb069', fontSize: 16 }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'rgba(26, 26, 46, 0.9)',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            textStyle: { color: '#f5f5f5' }
+                        },
+                        legend: {
+                            data: ['Skills', 'Projects', 'Network'],
+                            textStyle: { color: '#f5f5f5' },
+                            top: 30
+                        },
+                        grid: { top: 80, bottom: 40, left: 60, right: 40 },
+                        xAxis: {
+                            type: 'category',
+                            data: ['Q1', 'Q2', 'Q3', 'Q4'],
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            max: 100,
+                            axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+                            axisLabel: { color: 'rgba(245, 245, 245, 0.6)' },
+                            splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
+                        },
+                        series: [
+                            {
+                                name: 'Skills',
+                                type: 'bar',
+                                data: [65, 72, 78, 85],
+                                itemStyle: { color: '#7fb069' }
+                            },
+                            {
+                                name: 'Projects',
+                                type: 'bar',
+                                data: [70, 75, 82, 88],
+                                itemStyle: { color: '#cc8b3c' }
+                            },
+                            {
+                                name: 'Network',
+                                type: 'bar',
+                                data: [60, 68, 75, 82],
+                                itemStyle: { color: '#c17767' }
+                            }
+                        ]
+                    };
+                    break;
+            }
+            
+            myChart.setOption(option);
+        }
+
+        function showFeatureSpecificMessage() {
+            const activeModule = document.querySelector('.module-tab.active').dataset.module;
+            const messages = {
+                finance: "Your financial AI has identified an opportunity: you could save €150/month by optimizing your subscription spending. Would you like me to show you how? 🦉",
+                health: "I've noticed your recovery metrics are excellent this week. Your current training load is optimal for making strength gains. Ready to push a bit harder? 💪",
+                spirituality: "Your meditation consistency is beautiful to see. You've maintained a 45-day streak! How about trying a 10-minute silent meditation today? 🧘",
+                habits: "Your habit stacking is working brilliantly! The 'read before bed' routine has improved your sleep quality by 15%. Keep building those atomic habits! ⚡",
+                career: "Your skill development trajectory is impressive! The Python course you completed has already been applied in 3 projects. Ready for the next challenge? 🚀"
+            };
+
+            showNotification(messages[activeModule] || "I'm here to help you optimize every aspect of your life. What would you like to explore today? 🦉");
+        }
+
+        function showFeatureWelcome() {
+            const welcomeMessages = [
+                "Welcome to the Features page! 🎉 Click on any module tab to explore detailed functionality. No signup needed!",
+                "This is where you can dive deep into each LifeOS module. Try clicking on different tabs to see live demos! ✨",
+                "Every feature you see here is fully interactive. Experience the power of unified life management firsthand. 🚀"
+            ];
+
+            const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+            showNotification(randomMessage);
+        }
+
+        function showNotification(message) {
+            // Remove existing notification
+            const existing = document.querySelector('.ai-notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'ai-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <img src="resources/ain-owl.png" alt="Ain" class="notification-icon">
+                    <div class="notification-message">${message}</div>
+                    <button class="notification-close">&times;</button>
+                </div>
+            `;
+
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 20px;
+                max-width: 300px;
+                background: rgba(26, 26, 46, 0.95);
+                border: 1px solid rgba(204, 139, 60, 0.3);
+                border-radius: 15px;
+                padding: 15px;
+                backdrop-filter: blur(20px);
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+
+            const content = notification.querySelector('.notification-content');
+            content.style.cssText = `
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+            `;
+
+            const icon = notification.querySelector('.notification-icon');
+            icon.style.cssText = `
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            `;
+
+            const messageEl = notification.querySelector('.notification-message');
+            messageEl.style.cssText = `
+                color: #f5f5f5;
+                font-size: 14px;
+                line-height: 1.4;
+                flex: 1;
+            `;
+
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: #f5f5f5;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin: -5px -5px 0 0;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Close handlers
+            closeBtn.addEventListener('click', () => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 300);
+            });
+
+            // Auto close after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
